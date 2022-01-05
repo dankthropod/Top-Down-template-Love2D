@@ -12,7 +12,7 @@ function love.load()
     gameMap = sti('maps/testMap.lua')
 
     player = {}
-    player.collider = world:newBSGRectangleCollider(400, 250, 40, 40, 10)
+    player.collider = world:newBSGRectangleCollider(400, 250, 40, 80, 10)
     player.collider:setFixedRotation(true)
     player.x = 400
     player.y = 200
