@@ -47,28 +47,32 @@ function love.update(dt)
     local vx = 0
     local vy = 0
 
-    if love.keyboard.isDown("right") then
+    if love.keyboard.isDown("d") then
         vx = player.speed
         player.anim = player.animations.right
         isMoving = true
     end
 
-    if love.keyboard.isDown("left") then
+    if love.keyboard.isDown("a") then
         vx = player.speed * -1
         player.anim = player.animations.left
         isMoving = true
     end
 
-    if love.keyboard.isDown("down") then
+    if love.keyboard.isDown("s") then
         vy = player.speed
         player.anim = player.animations.down
         isMoving = true
     end
 
-    if love.keyboard.isDown("up") then
+    if love.keyboard.isDown("w") then
         vy = player.speed * -1
         player.anim = player.animations.up
         isMoving = true
+    end
+
+    if vy == (player.speed) or (player.speed * -1) then
+      -- vx = 0
     end
 
     player.collider:setLinearVelocity(vx, vy)
