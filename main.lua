@@ -17,9 +17,8 @@ function love.load()
     player.x = 400
     player.y = 200
     player.speed = 300
-    player.sprite = love.graphics.newImage('sprites/parrot.png')
     player.spriteSheet = love.graphics.newImage('sprites/player-sheet.png')
-    player.grid = anim8.newGrid( 12, 18, player.spriteSheet:getWidth(), player.spriteSheet:getHeight() )
+    player.grid = anim8.newGrid( 12, 18,player.spriteSheet:getWidth(), player.spriteSheet:getHeight() )
 
     player.animations = {}
     player.animations.down = anim8.newAnimation( player.grid('1-4', 1), 0.2 )
@@ -29,7 +28,16 @@ function love.load()
 
     player.anim = player.animations.left
 
-    background = love.graphics.newImage('sprites/background.png')
+    font = love.graphics.setNewFont('sprites/fonts/VT323-Regular.ttf',30)
+
+    dialogueBox = love.graphics.newImage('sprites/dialogue_box.png')
+
+    dialogue = {}
+    dialogue.demo = {}
+    dialogue.demo.1 = 'Hello World!'
+    dialogue.demo.2 = 'Did you hear about lua?''
+    dialogue.demo.3 = 'They say its pretty cool...'
+    dialogue.hasSkipped = false
 
     walls = {}
     if gameMap.layers["Walls"] then
@@ -118,6 +126,7 @@ function love.update(dt)
 end
 
 function love.draw()
+    -- game objects
     cam:attach()
       gameMap:drawLayer(gameMap.layers["Ground"])
       gameMap:drawLayer(gameMap.layers["Buildings"])
@@ -126,4 +135,7 @@ function love.draw()
       player.anim:draw(player.spriteSheet, player.x, player.y, nil, 5, nil, 6, 9)
       -- world:draw()
     cam:detach()
+    -- ui
+    love.graphics.draw(dialogueBox, 225, 350, nil, 10, 10)
+    love.graphics.print('Hello World!', 241, 358)
 end
