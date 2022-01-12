@@ -1,6 +1,8 @@
 function love.load()
     wf = require 'libraries/windfield'
     world = wf.newWorld(0,0)
+    world:addCollisionClass('Solid')
+    world:addCollisionClass('Dialogue', {ignores = {'Solid'}})
 
     camera = require 'libraries/camera'
     cam = camera()
@@ -40,6 +42,7 @@ function love.load()
       for i, obj in pairs(gameMap.layers["Walls"].objects) do
         local wall = world:newRectangleCollider(obj.x, obj.y, obj.width, obj.height)
         wall:setType('static')
+        wall:setCollisionClass('Solid')
         table.insert(walls, wall)
       end
     end
