@@ -36,6 +36,7 @@ function love.load()
 
     dialogue = {}
     dialogue.demo = {}
+    dialogue.drawText = false
     dialogue.hasSkipped = false
     walls = {}
     if gameMap.layers["Walls"] then
@@ -103,6 +104,11 @@ function love.update(dt)
     if cam.y > (mapH - h/2) then
       cam.y = (mapH - h/2)
     end
+
+    -- On colission enter dialogue
+    if player.collider:enter('Dialogue') then
+      dialogue.drawText = true
+    end
 end
 function love.draw()
     -- game objects
@@ -115,6 +121,8 @@ function love.draw()
       -- world:draw()
     cam:detach()
     -- ui
-    love.graphics.draw(dialogueBox, 225, 350, nil, 10, 10)
-    love.graphics.print('Hello World!', 241, 358)
+    if dialogue.drawText == true then
+      love.graphics.draw(dialogueBox, 225, 350, nil, 10, 10)
+      love.graphics.print('Hello World!', 241, 358)
+    end
 end
