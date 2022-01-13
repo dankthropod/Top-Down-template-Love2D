@@ -5,6 +5,7 @@ function game:enter()
     world = wf.newWorld(0.,0)
     world:addCollisionClass('Solid')
     world:addCollisionClass('Dialogue', {ignores = {'Solid'}})
+    world:addCollisionClass('Player')
 
     camera = require 'libraries/camera'
     cam = camera()
@@ -15,8 +16,11 @@ function game:enter()
     sti = require 'libraries/sti'
     gameMap = sti('maps/testMap.lua')
 
+    -- need to make this its own lua file
     player = {}
     player.collider = world:newBSGRectangleCollider(400, 250, 40, 80, 10)
+    player.collider:setCollisionClass('Player')
+    player.collider:setObject(self)
     player.collider:setFixedRotation(true)
     player.x = 400
     player.y = 200
