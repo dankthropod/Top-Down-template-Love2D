@@ -8,8 +8,8 @@ return {
   height = 30,
   tilewidth = 64,
   tileheight = 64,
-  nextlayerid = 7,
-  nextobjectid = 31,
+  nextlayerid = 8,
+  nextobjectid = 32,
   properties = {},
   tilesets = {
     {
@@ -479,6 +479,34 @@ return {
           y = 384,
           width = 400,
           height = 410,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 7,
+      name = "HouseDialogue",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 31,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 192,
+          y = 960,
+          width = 256,
+          height = 256,
           rotation = 0,
           visible = true,
           properties = {}

@@ -1,58 +1,66 @@
 local game = {}
 
 function game:enter()
-    wf = require 'libraries/windfield'
-    world = wf.newWorld(0.,0)
-    world:addCollisionClass('Solid')
-    world:addCollisionClass('Dialogue', {ignores = {'Solid'}})
-    world:addCollisionClass('Player')
+  wf = require 'libraries/windfield'
+  world = wf.newWorld(0.,0)
+  world:addCollisionClass('Solid')
+  world:addCollisionClass('Dialogue', {ignores = {'Solid'}})
+  world:addCollisionClass('Player')
 
-    camera = require 'libraries/camera'
-    cam = camera()
+  camera = require 'libraries/camera'
+  cam = camera()
 
-    anim8 = require 'libraries/anim8'
-    love.graphics.setDefaultFilter("nearest", "nearest")
+  anim8 = require 'libraries/anim8'
+  love.graphics.setDefaultFilter("nearest", "nearest")
 
-    sti = require 'libraries/sti'
-    gameMap = sti('maps/testMap.lua')
+  sti = require 'libraries/sti'
+  gameMap = sti('maps/testMap.lua')
 
     -- need to make this its own lua file
-    player = {}
-    player.collider = world:newBSGRectangleCollider(400, 250, 40, 80, 10)
-    player.collider:setCollisionClass('Player')
-    player.collider:setObject(self)
-    player.collider:setFixedRotation(true)
-    player.x = 400
-    player.y = 200
-    player.speed = 300
-    player.spriteSheet = love.graphics.newImage('sprites/player-sheet.png')
-    player.grid = anim8.newGrid( 12, 18,player.spriteSheet:getWidth(), player.spriteSheet:getHeight() )
+  player = {}
+  player.collider = world:newBSGRectangleCollider(400, 250, 40, 80, 10)
+  player.collider:setCollisionClass('Player')
+  player.collider:setObject(self)
+  player.collider:setFixedRotation(true)
+  player.x = 400
+  player.y = 200
+  player.speed = 300
+  player.spriteSheet = love.graphics.newImage('sprites/player-sheet.png')
+  player.grid = anim8.newGrid( 12, 18,player.spriteSheet:getWidth(), player.spriteSheet:getHeight() )
 
-    player.animations = {}
-    player.animations.down = anim8.newAnimation( player.grid('1-4', 1), 0.2 )
-    player.animations.left = anim8.newAnimation( player.grid('1-4', 2), 0.2 )
-    player.animations.right = anim8.newAnimation( player.grid('1-4', 3), 0.2 )
-    player.animations.up = anim8.newAnimation( player.grid('1-4', 4), 0.2 )
+  player.animations = {}
+  player.animations.down = anim8.newAnimation( player.grid('1-4', 1), 0.2 )
+  player.animations.left = anim8.newAnimation( player.grid('1-4', 2), 0.2 )
+  player.animations.right = anim8.newAnimation( player.grid('1-4', 3), 0.2 )
+  player.animations.up = anim8.newAnimation( player.grid('1-4', 4), 0.2 )
 
-    player.anim = player.animations.left
+  player.anim = player.animations.left
 
-    font = love.graphics.setNewFont('sprites/fonts/VT323-Regular.ttf',30)
+  font = love.graphics.setNewFont('sprites/fonts/VT323-Regular.ttf',30)
 
-    dialogueBox = love.graphics.newImage('sprites/dialogue_box.png')
+  dialogueBox = love.graphics.newImage('sprites/dialogue_box.png')
 
-    dialogue = {}
-    dialogue.demo = {}
-    dialogue.drawText = false
-    dialogue.hasSkipped = false
-    walls = {}
-    if gameMap.layers["Walls"] then
-      for i, obj in pairs(gameMap.layers["Walls"].objects) do
-        local wall = world:newRectangleCollider(obj.x, obj.y, obj.width, obj.height)
-        wall:setType('static')
-        wall:setCollisionClass('Solid')
-        table.insert(walls, wall)
-      end
+  dialogue = {}
+  dialogue.demo = {}
+  dialogue.drawText = false
+  dialogue.hasSkipped = false
+  walls = {}
+  if gameMap.layers["Walls"] then
+    for i, obj in pairs(gameMap.layers["Walls"].objects) do
+      local wall = world:newRectangleCollider(obj.x, obj.y, obj.width, obj.height)
+      wall:setType('static')
+      wall:setCollisionClass('Solid')
+      table.insert(walls, wall)
     end
+  end
+
+  if gameMap.layers["HouseDialogue"] then
+    for i, obj in pairs(gameMap.layers["HouseDialogue"].objects) do
+      local houseDialogue = world:newRectangleCollider(obj.x, obj.y, obj.width, obj.height)
+      houseDialogue:setType('static')
+      houseDialogue:setCollisionClass('Dialogue')
+    end
+  end
 end
 function game:update(dt)
     local isMoving = false
