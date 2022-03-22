@@ -36,14 +36,14 @@ function game:enter()
 
     player.anim = player.animations.left
 
-    font = love.graphics.setNewFont('sprites/fonts/VT323-Regular.ttf',30)
+    -- font = love.graphics.setNewFont('sprites/fonts/VT323-Regular.ttf',30)
 
-    dialogueBox = love.graphics.newImage('sprites/dialogue_box.png')
+    -- dialogueBox = love.graphics.newImage('sprites/dialogue_box.png')
 
-    dialogue = {}
-    dialogue.demo = {}
-    dialogue.drawText = false
-    dialogue.hasSkipped = false
+    -- dialogue = {}
+    -- dialogue.demo = {}
+    -- dialogue.drawText = false
+    -- dialogue.hasSkipped = false
     walls = {}
     if gameMap.layers["Walls"] then
       for i, obj in pairs(gameMap.layers["Walls"].objects) do
@@ -56,8 +56,9 @@ function game:enter()
 end
 function game:update(dt)
     local isMoving = false
-    local vx = 0
-    local vy = 0
+    --these were locals
+    vx = 0
+    vy = 0
     if love.keyboard.isDown("d") then
         vx = player.speed
         player.anim = player.animations.right
@@ -77,6 +78,15 @@ function game:update(dt)
         vy = player.speed * -1
         player.anim = player.animations.up
         isMoving = true
+    end
+
+    --shoot
+    if love.mouse.isDown(1) then
+        --table.create_bullet(entities,create_bullet(self.x, self.y, -100, 0))
+
+    end
+    if vx+vy == 600 or vx+vy == -600 then
+
     end
     if vy == (player.speed) or (player.speed * -1) then
       -- vx = 0
@@ -113,7 +123,7 @@ function game:update(dt)
 
     -- On colission enter dialogue
     if player.collider:enter('Dialogue') then
-      dialogue.drawText = true
+      -- dialogue.drawText = true
     end
 end
 function game:draw()
@@ -127,9 +137,12 @@ function game:draw()
       -- world:draw()
     cam:detach()
     -- ui
-    if dialogue.drawText == true then
-      love.graphics.draw(dialogueBox, 225, 350, nil, 10, 10)
-      love.graphics.print('Hello World!', 241, 358)
-    end
+    --love.graphics.print(vx+vy)
+    --love.graphics.print(vx,0,50)
+    --love.graphics.print(vy,0,100)
+    -- if dialogue.drawText == true then
+    --   love.graphics.draw(dialogueBox, 225, 350, nil, 10, 10)
+    --   love.graphics.print('Hello World!', 241, 358)
+    -- end
 end
 return game
